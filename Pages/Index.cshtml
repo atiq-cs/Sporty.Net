@@ -1,0 +1,62 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Welcome to Sporty!";
+}
+
+<div class="row mb-auto">
+    <div class="text-center">
+        <h1 class="display-4">Sporty App</h1>
+        Sporty, connecting athletes.
+    </div>
+</div>
+
+
+@* <div class="row">
+    <div class="col-sm">
+        @Html.DisplayNameFor(model => model.Events[0].Title)
+    </div>
+    <div class="col-sm">
+        @Html.DisplayNameFor(model => model.Events[0].Date)
+    </div>
+    <div class="col-sm">
+        @Html.DisplayNameFor(model => model.Events[0].Duration)
+    </div>
+    <div class="col-sm">
+        @Html.DisplayNameFor(model => model.Events[0].Members)
+    </div>
+</div> *@
+
+@foreach (var item in Model.Events)
+{
+<div class="row">
+    <div class="col-md-auto">
+        <h4>
+        @{ var title = item.Members.Count == 2? "Singles" : item.Members.Count == 4? "Doubles" : item.Members.Count > 2? "Group": "Other"; }
+        @Html.DisplayFor(modelItem => title)
+        </h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-auto">
+        <b>
+        @Html.DisplayFor(modelItem => item.Date)
+        --
+        @Html.DisplayFor(modelItem => item.Duration)
+        </b>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-auto">
+        @{ bool isFirst = true; }
+        @foreach (var userItem in item.Members) {
+            var Name =  ", " + userItem.FirstName + " " + userItem.LastName;
+            if (isFirst) {
+                isFirst = false;
+                Name = userItem.FirstName + " " + userItem.LastName;
+            }
+            @Html.DisplayFor(modelItem => Name);
+        }
+    </div>
+</div>
+}
